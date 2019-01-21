@@ -1,0 +1,282 @@
+https://www.youtube.com/watch?v=Kz_wjK9qL2Q
+https://www.youtube.com/watch?v=l5KC6OcbuOI
+https://www.youtube.com/watch?v=bES7K0fgl2U
+robomongo
+https://www.youtube.com/watch?v=Hu-cyytqfp8 
+//mongodb site
+Set up the MongoDB environment
+If your path includes spaces, enclose the entire path in double quotes
+"D:\Program Files\MongoDB\Server\4.0\bin\mongod.exe" --dbpath "D:\Program Files\MongoDB\Server\4.0\data"
+
+This will show that MongoDB is installed and run successfully. Next time when you run MongoDB, you need to issue only commands.
+D:\set up\mongodb\bin>mongod.exe --dbpath "d:\set up\mongodb\data" 
+D:\set up\mongodb\bin>mongo.exe
+
+Start MongoDB
+"D:\Program Files\MongoDB\Server\4.0\bin\mongo.exe"
+
+Connect to MongoDB
+"D:\Program Files\MongoDB\Server\4.0\bin\mongo.exe"
+
+Later, to stop MongoDB, press Control+C in the terminal where the mongod instance is running.
+
+
+
+Configure a Windows Service for MongoDB Community Edition
+Create directories
+mkdir c:\data\db
+mkdir c:\data\log
+
+Create a configuration file
+The file must set systemLog.path. Include additional configuration options as appropriate.
+D:\Program Files\MongoDB\Server\4.0\mongod.cfg
+contents of the filesystemLog:
+systemLog:
+    destination: file
+    path: D:\Program Files\MongoDB\Server\4.0\data\log\mongod.log
+storage:
+    dbPath: D:\Program Files\MongoDB\Server\4.0\data\db
+
+Run all of the following commands in Command Prompt with “Administrative Privileges”
+Install the MongoDB service
+Open new cmd window and type the below command
+"D:\Program Files\MongoDB\Server\4.0\bin\mongod.exe" --config "D:\Program Files\MongoDB\Server\4.0\mongod.cfg" --install
+
+Stop or remove the MongoDB service as needed
+net stop MongoDB
+or
+to remove
+"D:\Program Files\MongoDB\Server\4.0\bin\mongod.exe" --remove
+
+Manually Create a Windows Service for MongoDB Community Edition
+Open an Administrator command prompt
+Ctrl + Shift + Enter 
+
+Create directories
+mkdir c:\data\db
+mkdir c:\data\log
+
+Create a configuration file
+create a file at C:\Program Files\MongoDB\Server\3.4\mongod.cfg that specifies both systemLog.path and storage.dbPath
+systemLog:
+    destination: file
+    path: D:\Program Files\MongoDB\Server\4.0\data\log\mongod.log
+storage:
+    dbPath: D:\Program Files\MongoDB\Server\4.0\data\db
+	
+Create the MongoDB service
+Run all of the following commands in Command Prompt with “Administrative Privileges”
+sc.exe create MongoDB binPath= "\"D:\Program Files\MongoDB\Server\4.0\bin\mongod.exe\" --service --config=\"D:\Program Files\MongoDB\Server\4.0\mongod.cfg\"" DisplayName= "MongoDB" start= "auto"
+sc.exe create MongoDB binPath= "\"C:\Program Files\MongoDB\Server\3.4\bin\mongod.exe\" --service --config=\"C:\Program Files\MongoDB\Server\3.4\mongod.cfg\"" DisplayName= "MongoDB" start= "auto"
+sc.exe requires a space between “=” and the configuration values (eg “binPath= “), and a “" to escape double quotes
+
+Start the MongoDB service
+net start MongoDB
+Stop or remove the MongoDB service as needed
+net stop MongoDB
+or
+to remove
+"D:\Program Files\MongoDB\Server\4.0\bin\mongod.exe" --remove
+
+If successfully created, the following log message will display
+[SC] CreateService SUCCESS
+
+Start the MongoDB service
+net start MongoDB
+
+Stop or remove the MongoDB service as needed
+net stop MongoDB
+To remove the MongoDB service, first stop the service and then run the following command
+sc.exe delete MongoDB
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+tutorials point
+This will show waiting for connections message on the console output, which indicates that the mongod.exe process is running successfully
+mongod.exe --dbpath "D:\Program Files\MongoDB\Server\4.0\data"
+This will show that MongoDB is installed and run successfully
+mongo.exe
+Next time when you run MongoDB, you need to issue only commands.
+mongod.exe --dbpath "D:\Program Files\MongoDB\Server\4.0\data"
+mongo.exe
+
+MongoDB Help
+To get a list of commands, type db.help() in MongoDB client
+
+MongoDB Statistics
+To get stats about MongoDB server, type the command db.stats() in MongoDB client
+This will show the database name, number of collection and documents in the database
+
+If you want to create a database with name <mydb>
+>use mydb
+
+To check your currently selected database, use the command 
+db
+
+If you want to check your databases list, use the command 
+show dbs
+
+Your created database (mydb) is not present in list. To display database, you need to insert at least one document into it
+db.movie.insert{"name":"salmaan"}
+show dbs
+
+MongoDB db.dropDatabase() command is used to drop a existing database
+db.dropDatabase()
+This will delete the selected database. If you have not selected any database, then it will delete default 'test' database.
+
+MongoDB db.createCollection(name, options) is used to create collection
+db.createCollection("mycollection") or db.createCollection(name, options)--> name-string, options=document
+name is name of collection to be created. Options is a document and is used to specify configuration of collection
+db.createCollection("mycollection")
+check the created collection
+show collections
+createCollection() method with few important options
+db.createCollection("mycol", { capped : true, autoIndexId : true, size : 6142800, max : 10000 } )
+
+In MongoDB, you don't need to create collection. MongoDB creates collection automatically, when you insert some document
+db.tutorialspoint.insert({"name" : "tutorialspoint"})
+show collections
+
+Basic syntax of drop() command
+db.COLLECTION_NAME.drop()
+MongoDB Enterprise > show collections
+firstCollection
+secondCollection
+thirdCollection
+MongoDB Enterprise > db.thirdCollection.drop()
+true
+MongoDB Enterprise > show collections
+firstCollection
+secondCollection
+MongoDB Enterprise >
+drop() method will return true, if the selected collection is dropped successfully, otherwise it will return false
+
+The basic syntax of insert() command
+db.mycol.insert({_id: "ObjectId(7df78ad8902c)","title": "MongoDB Overview","description": "MongoDB is no sql database","by": "tutorials point","url": "http://www.tutorialspoint.com","tags": ["mongodb", "database", "NoSQL"],"likes": "100"})
+db.mycol.insert({"title": "MongoDB Overview2","description": "MongoDB is no sql database2","by": "tutorials point","url": "http://www.tutorialspoint.com2","tags": ["mongodb2", "database2", "NoSQL2"],"likes": "102"})
+db.mycol.insert({"title": "MongoDB Overview3","description": "MongoDB is no sql database3","by": "tutorials point3","url": "http://www.tutorialspoint.com3","tags": ["mongodb3", "database3", "NoSQL3"],"likes": "103"})
+Here mycol is our collection name, as created in the previous chapter. If the collection doesn't exist in the database, 
+then MongoDB will create this collection and then insert a document into it
+
+In the inserted document, if we don't specify the _id parameter, then MongoDB assigns a unique ObjectId for this document.
+_id is 12 bytes hexadecimal number unique for every document in a collection. 12 bytes are divided as follows −
+_id: ObjectId(4 bytes timestamp, 3 bytes machine id, 2 bytes process id, 
+   3 bytes incrementer)
+   
+To insert multiple documents(rows) in a single query, you can pass an array of documents in insert() command
+db.post.insert([
+   {
+      "title": "MongoDB Overview", 
+      "description": "MongoDB is no sql database",
+      "by": "tutorials point",
+      "url": "http://www.tutorialspoint.com",
+      "tags": ["mongodb", "database", "NoSQL"],
+      "likes": "100"
+   },
+	
+   {
+      "title": "NoSQL Database", 
+      "description": "NoSQL database doesn"t have tables",
+      "by": "tutorials point",
+      "url": "http://www.tutorialspoint.com",
+      "tags": ["mongodb", "database", "NoSQL"],
+      "likes": "20", 
+      "comments": [	
+         {
+            "user":"user1",
+            "message": "My first comment",
+            "dateCreated": new Date(2013,11,10,2,35),  ////////have doubt
+            "like": "0" 
+         }
+      ]
+   }
+])
+To insert the document you can use db.post.save(document) also
+
+how to query document from MongoDB collections
+The basic syntax of find() method
+db.COLLECTION_NAME.find()
+db.mycol.find()
+
+To display the results in a formatted way
+db.mycol.find().pretty()
+Apart from find() method, there is findOne() method, that returns only one document
+
+some condition
+Operation	Syntax	Example	RDBMS Equivalent
+Equality	{<key>:<value>}	db.mycol.find({"by":"tutorials point"}).pretty()	where by = 'tutorials point'
+Less Than	{<key>:{$lt:<value>}}	db.mycol.find({"likes":{$lt:50}}).pretty()	where likes < 50
+Less Than Equals	{<key>:{$lte:<value>}}	db.mycol.find({"likes":{$lte:50}}).pretty()	where likes <= 50
+Greater Than	{<key>:{$gt:<value>}}	db.mycol.find({"likes":{$gt:50}}).pretty()	where likes > 50
+Greater Than Equals	{<key>:{$gte:<value>}}	db.mycol.find({"likes":{$gte:50}}).pretty()	where likes >= 50
+Not Equals	{<key>:{$ne:<value>}}	db.mycol.find({"likes":{$ne:50}}).pretty()	where likes != 50
+
+AND in MongoDB
+will show all the tutorials written by 'tutorials point' and whose title is 'MongoDB Overview'
+db.mycol.find({$and:[{"by":"tutorials point"},{"title": "MongoDB Overview"}]}).pretty() {
+   "_id": ObjectId(7df78ad8902c),
+   "title": "MongoDB Overview", 
+   "description": "MongoDB is no sql database",
+   "by": "tutorials point",
+   "url": "http://www.tutorialspoint.com",
+   "tags": ["mongodb", "database", "NoSQL"],
+   "likes": "100"
+}
+equivalent where clause will be ' where by = 'tutorials point' AND title = 'MongoDB Overview' '
+
+OR in MongoDB
+db.mycol.find({$or:[{"by":"tutorials point"},{"title": "MongoDB Overview"}]}).pretty()
+{
+   "_id": ObjectId(7df78ad8902c),
+   "title": "MongoDB Overview", 
+   "description": "MongoDB is no sql database",
+   "by": "tutorials point",
+   "url": "http://www.tutorialspoint.com",
+   "tags": ["mongodb", "database", "NoSQL"],
+   "likes": "100"
+}
+
+Using AND and OR Together
+db.mycol.find({"likes": {$gt:10}, $or: [{"by": "tutorials point"},
+   {"title": "MongoDB Overview"}]}).pretty()
+{
+   "_id": ObjectId(7df78ad8902c),
+   "title": "MongoDB Overview", 
+   "description": "MongoDB is no sql database",
+   "by": "tutorials point",
+   "url": "http://www.tutorialspoint.com",
+   "tags": ["mongodb", "database", "NoSQL"],
+   "likes": "100"
+}
+
+MongoDB's update() and save() methods are used to update document into a collection. 
+The update() method updates the values in the existing document while the save() method replaces the existing document with the document 
+passed in save() method.
+db.COLLECTION_NAME.update(SELECTION_CRITERIA, UPDATED_DATA)
+MongoDB Enterprise > db.mycol.find()
+{ "_id" : "ObjectId(7df78ad8902c)", "title" : "MongoDB Overview", "description" : "MongoDB is no sql database", "by" : "tutorials point", "url" : "http://
+www.tutorialspoint.com", "tags" : [ "mongodb", "database", "NoSQL" ], "likes" : "100" }
+MongoDB Enterprise > db.mycol.update({"title":"MongoDB Overview"},{$set:{"title":"MongoDB New Overview"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+MongoDB Enterprise > db.mycol.find()
+{ "_id" : "ObjectId(7df78ad8902c)", "title" : "MongoDB New Overview", "description" : "MongoDB is no sql database", "by" : "tutorials point", "url" : "htt
+p://www.tutorialspoint.com", "tags" : [ "mongodb", "database", "NoSQL" ], "likes" : "100" }
+
+MongoDB's remove() method is used to remove a document from the collection. remove() method accepts two parameters. 
+One is deletion criteria and second is justOne flag.
+deletion criteria − (Optional) deletion criteria according to documents will be removed.
+justOne − (Optional) if set to true or 1, then remove only one document.
+db.COLLECTION_NAME.remove(DELLETION_CRITTERIA)
+db.mycol.remove({'title':'MongoDB Overview'})
+db.mycol.find()
+If there are multiple records and you want to delete only the first record, then set justOne parameter in remove() method.
+>db.COLLECTION_NAME.remove(DELETION_CRITERIA,1)
+
+Remove All Documents
+If you don't specify deletion criteria, then MongoDB will delete whole documents from the collection. This is equivalent of SQL's truncate command.
+>db.mycol.remove()
+>db.mycol.find()
+>
+
+
+
+
